@@ -13,8 +13,8 @@
       {"rule_set": ["geosite-cn", "geosite-steamcn"], "server": "local"},
       {"query_type": ["A", "AAAA"], "server": "fakeip", "rewrite_ttl": 1}
     ],
-    "final": "foreign",
-    "strategy": "ipv4_only",
+    "final": "local",
+    "strategy": "prefer_ipv4",
     "independent_cache": true,
     "reverse_mapping": true
   },

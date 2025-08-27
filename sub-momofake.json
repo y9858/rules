@@ -1,17 +1,19 @@
 {
   "dns": {
     "servers": [
-      {"tag": "china", "type": "udp", "server": "223.5.5.5", "detour": "direct"},
+      {"tag": "local", "type": "udp", "server": "223.5.5.5"},
       {"tag": "foreign", "type": "https", "server": "8.8.8.8", "detour": "🚀 默认代理"},
-      {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.18.0.1/16"}
+      {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.18.0.1/16", "inet6_range": "fc00::/18"}
     ],
     "rules": [
-      {"clash_mode": "direct", "server": "china"},
+      {"clash_mode": "direct", "server": "local"},
       {"clash_mode": "global", "server": "fakeip"},
-      {"rule_set": ["geosite-cn", "geosite-steamcn"], "server": "china"}
+      {"query_type": "HTTPS", "action": "reject"},
+      {"rule_set": ["geosite-cn", "geosite-steamcn"], "server": "local"},
+      {"query_type": ["A"], "server": "fakeip", "rewrite_ttl": 1}
     ],
     "final": "foreign",
-    "strategy": "ipv4_only",
+    "strategy": "prefer_ipv4",
     "independent_cache": true,
     "reverse_mapping": true
   },
@@ -60,7 +62,7 @@
       {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://github.com/qljsyph/ruleset-icon/raw/refs/heads/main/sing-box/geoip/China-ASN-combined-ip.srs", "download_detour": "🎯 全球直连"}
     ],
     "final": "🐠 漏网之鱼",
-    "default_domain_resolver": {"server": "china"}
+    "default_domain_resolver": {"server": "local"}
   },
   "inbounds": [
     {
@@ -68,6 +70,18 @@
       "type": "direct",
       "listen": "::",
       "listen_port": 1053
+    },
+    {
+      "tag": "http-in",
+      "type": "http",
+      "listen": "::",
+      "listen_port": 8080
+    },
+    {
+      "tag": "socks-in",
+      "type": "socks",
+      "listen": "::",
+      "listen_port": 1080
     },
     {
       "tag": "redirect-in",

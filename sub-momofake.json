@@ -2,7 +2,7 @@
   "dns": {
     "servers": [
       {"tag": "china", "type": "udp", "server": "223.5.5.5", "detour": "direct"},
-      {"tag": "foreign", "type": "https", "server": "8.8.8.8", "detour": "🚀 默认代理", "client_subnet": "223.246.113.0/19"},
+      {"tag": "foreign", "type": "https", "server": "8.8.8.8", "detour": "🚀 默认代理"},
       {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.18.0.1/16"}
     ],
     "rules": [
@@ -69,7 +69,7 @@
       "listen": "::",
       "listen_port": 1053
     },
-        {
+    {
       "tag": "redirect-in",
       "type": "redirect",
       "listen": "::",

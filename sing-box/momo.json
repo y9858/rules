@@ -1,21 +1,30 @@
 {
   "dns": {
+    "hosts": {
+      "dns.alidns.com": ["223.5.5.5", "223.6.6.6", "2400:3200::1", "2400:3200:baba::1"],
+      "doh.pub": ["1.12.12.12", "1.12.12.21", "120.53.53.53"],
+      "dns.google": ["8.8.8.8", "8.8.4.4", "2001:4860:4860::8888", "2001:4860:4860::8844"],
+      "cloudflare-dns.com": ["1.1.1.1", "1.0.0.1", "2606:4700:4700::1111", "2606:4700:4700::1001"]
+    },
     "servers": [
-      {"tag": "local", "type": "udp", "server": "223.5.5.5"},
-      {"tag": "foreign", "type": "https", "server": "8.8.8.8", "detour": "🚀 默认代理"},
-      {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.18.0.1/16", "inet6_range": "fc00::/18"}
+      {"tag": "dns_direct", "address": ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"], "detour": "DIRECT"},
+      {"tag": "dns_proxy", "address": ["https://dns.google/dns-query", "https://cloudflare-dns.com/dns-query"]},
+      {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18", "exclude_rule": ["rule_set": {"geosite-cn"}]}
     ],
     "rules": [
-      {"clash_mode": "direct", "server": "local"},
-      {"clash_mode": "global", "server": "fakeip"},
-      {"query_type": "HTTPS", "action": "reject"},
-      {"rule_set": ["geosite-cn", "geosite-steamcn"], "server": "local"},
-      {"query_type": ["A"], "server": "fakeip", "rewrite_ttl": 1}
+      {"outbound": ["any"], "server": "dns_direct"},
+      {"clash_mode": ["Direct"], "query_type": ["A", "AAAA"], "server": "dns_direct"},
+      {"clash_mode": ["Global"], "query_type": ["A", "AAAA"], "server": "dns_proxy"},
+      {"rule_set": ["geosite-cn"], "query_type": ["A", "AAAA"], "server": "dns_direct"},
+      {"rule_set": ["geosite-!cn"], "query_type": ["A", "AAAA"], "server": "dns_fakeip"},
+      {"fallback_rules": [{"rule_set": ["geoip-cn"], "server": "dns_direct"}, {"match_all": true, "server": "dns_fakeip"}], "server": "dns_proxy"}
     ],
-    "final": "foreign",
+    "final": "dns_direct",
     "strategy": "prefer_ipv4",
     "independent_cache": true,
-    "reverse_mapping": true
+    "lazy_cache": true,
+    "reverse_mapping": true,
+    "mapping_override": true
   },
   "outbounds": [
     {"tag": "🚀 默认代理", "type": "selector", "outbounds": ["🐸 手动选择", "♻️ 自动选择"]},
@@ -62,7 +71,7 @@
       {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://github.com/qljsyph/ruleset-icon/raw/refs/heads/main/sing-box/geoip/China-ASN-combined-ip.srs", "download_detour": "🎯 全球直连"}
     ],
     "final": "🐠 漏网之鱼",
-    "default_domain_resolver": {"server": "local"}
+    "default_domain_resolver": {"server": "dns_direct"}
   },
   "inbounds": [
     {

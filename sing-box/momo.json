@@ -9,7 +9,7 @@
     "servers": [
       {"tag": "dns_direct", "address": ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"], "detour": "DIRECT"},
       {"tag": "dns_proxy", "address": ["https://dns.google/dns-query", "https://cloudflare-dns.com/dns-query"]},
-      {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18", "exclude_rule": ["rule_set": {"geosite-cn"}]}
+      {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18", "exclude_rule": {"rule_set": ["geosite-cn"]}}
     ],
     "rules": [
       {"outbound": ["any"], "server": "dns_direct"},

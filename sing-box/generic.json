@@ -21,7 +21,7 @@
   "outbounds": [
     {"tag": "🚀 默认代理", "type": "selector", "outbounds": ["♻️ 自动选择", "🐸 手动选择"]},
     {"tag": "♻️ 自动选择", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100},
-    {"tag": "🐸 手动选择", "type": "selector", "outbounds": ["🎯 全球直连"]},
+    {"tag": "🐸 手动选择", "type": "selector", "outbounds": []},
     {"tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🎯 全球直连", "🚀 默认代理"]},
     {"tag": "🎯 全球直连", "type": "direct"},
     {"tag": "GLOBAL", "type": "selector", "outbounds": ["🎯 全球直连", "🚀 默认代理"]} 

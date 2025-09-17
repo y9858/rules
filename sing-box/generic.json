@@ -6,7 +6,7 @@
     ],
     "rules": [
       {"clash_mode": "direct", "server": "dns_direct"},
-      {"clash_mode": "global", "server": "fakeip"},
+      {"clash_mode": "global", "server": "dns_direct"},
       {"query_type": "HTTPS", "action": "reject"},
       {"domain_suffix": ["services.googleapis.cn", "googleapis.cn", "xn--ngstr-lra8j.com"], "server": "dns_proxy"},
       {"rule_set": ["geosite-cn", "geosite-steamcn"], "server": "dns_direct"}

@@ -3,14 +3,14 @@
     "servers": [
       {"tag": "dns_direct", "type": "udp", "server": "223.5.5.5"},
       {"tag": "dns_proxy", "type": "https", "server": "8.8.8.8", "detour": "🚀 默认代理"},
-      {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18", "exclude_rule": {"rule_set": ["fake-ip-filter"]}}
+      {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"}
     ],
     "rules": [
       {"clash_mode": "direct", "server": "dns_direct"},
       {"clash_mode": "global", "server": "fakeip"},
       {"query_type": "HTTPS", "action": "reject"},
       {"domain_suffix": ["services.googleapis.cn", "googleapis.cn", "xn--ngstr-lra8j.com"], "server": "dns_proxy"},
-      {"rule_set": ["geosite-cn", "geosite-steamcn"], "server": "dns_direct"},
+      {"rule_set": ["fake-ip-filter", "geosite-cn", "geosite-steamcn"], "server": "dns_direct"},
       {"query_type": ["A", "AAAA"], "server": "fakeip", "rewrite_ttl": 1}
     ],
     "final": "dns_proxy",

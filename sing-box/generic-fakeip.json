@@ -22,7 +22,7 @@
     {"tag": "🚀 默认代理", "type": "selector", "outbounds": ["♻️ 自动选择", "🐸 手动选择"]},
     {"tag": "♻️ 自动选择", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100},
     {"tag": "🐸 手动选择", "type": "selector", "outbounds": []},
-    {"tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🎯 全球直连", "🚀 默认代理"]},
+    {"tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🚀 默认代理", "🎯 全球直连"]},
     {"tag": "🎯 全球直连", "type": "direct"},
     {"tag": "GLOBAL", "type": "selector", "outbounds": ["🎯 全球直连", "🚀 默认代理"]} 
   ],
@@ -30,8 +30,8 @@
     "rules": [
       {"action": "sniff", "sniffer": ["http", "tls", "quic", "dns"]},
       {"type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
-      {"ip_is_private": true, "outbound": "🎯 全球直连"},
-      {"clash_mode": "direct", "outbound": "🎯 全球直连"},
+      {"ip_is_private": true, "outbound": "direct"},
+      {"clash_mode": "direct", "outbound": "direct"},
       {"clash_mode": "global", "outbound": "GLOBAL"},
       {"rule_set": "geosite-youtube", "outbound": "🚀 默认代理"},
       {"rule_set": "geosite-google", "outbound": "🚀 默认代理"},
@@ -86,12 +86,12 @@
   "experimental": {
     "cache_file": {
       "enabled": true,
-      "path": "/etc/sing-box/cache.db",
+      "path": "./cache.db",
       "store_fakeip": true
     },
     "clash_api": {
       "external_controller": "0.0.0.0:9090",
-      "external_ui": "/etc/sing-box/ui",
+      "external_ui": "./ui",
       "external_ui_download_url": "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip",
       "external_ui_download_detour": "🎯 全球直连",
       "secret": "",

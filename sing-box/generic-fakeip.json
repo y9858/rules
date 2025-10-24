@@ -1,14 +1,13 @@
 {
   "dns": {
     "servers": [
-      {"tag": "dns_direct", "type": "udp", "server": "223.5.5.5"},
+      {"tag": "dns_direct", "type": "https", "server": "223.5.5.5"},
       {"tag": "dns_proxy", "type": "https", "server": "8.8.8.8", "detour": "🚀 默认代理"},
       {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"}
     ],
     "rules": [
-      {"clash_mode": "direct", "server": "dns_direct"},
-      {"clash_mode": "global", "server": "fakeip"},
-      {"query_type": "HTTPS", "action": "reject"},
+      {"clash_mode": "Direct", "server": "dns_direct"},
+      {"clash_mode": "Global", "server": "fakeip"},
       {"domain_suffix": ["services.googleapis.cn", "googleapis.cn", "xn--ngstr-lra8j.com"], "server": "dns_proxy"},
       {"rule_set": ["geosite-cn", "geosite-steamcn"], "server": "dns_direct"},
       {"query_type": ["A", "AAAA"], "server": "fakeip", "rewrite_ttl": 1}
@@ -22,7 +21,7 @@
     {"tag": "🚀 默认代理", "type": "selector", "outbounds": ["♻️ 自动选择", "🐸 手动选择"]},
     {"tag": "♻️ 自动选择", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100},
     {"tag": "🐸 手动选择", "type": "selector", "outbounds": []},
-    {"tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🚀 默认代理", "🎯 全球直连"]},
+    {"tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🎯 全球直连", "🚀 默认代理"]},
     {"tag": "🎯 全球直连", "type": "direct"},
     {"tag": "GLOBAL", "type": "selector", "outbounds": ["🎯 全球直连", "🚀 默认代理"]} 
   ],
@@ -31,8 +30,8 @@
       {"action": "sniff", "sniffer": ["http", "tls", "quic", "dns"]},
       {"type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
       {"ip_is_private": true, "outbound": "direct"},
-      {"clash_mode": "direct", "outbound": "direct"},
-      {"clash_mode": "global", "outbound": "GLOBAL"},
+      {"clash_mode": "Direct", "outbound": "direct"},
+      {"clash_mode": "Global", "outbound": "GLOBAL"},
       {"domain_keyword": ["cloudflare", "tailscale"], "outbound": "🎯 全球直连"},
       {"rule_set": "geosite-youtube", "outbound": "🚀 默认代理"},
       {"rule_set": "geosite-google", "outbound": "🚀 默认代理"},
@@ -63,7 +62,7 @@
       {"tag": "geoip-telegram", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs", "download_detour": "🎯 全球直连"},
       {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://github.com/qljsyph/ruleset-icon/raw/refs/heads/main/sing-box/geoip/China-ASN-combined-ip.srs", "download_detour": "🎯 全球直连"}
     ],
-    "final": "🎯 全球直连",
+    "final": "🚀 默认代理",
     "auto_detect_interface": true,
     "default_domain_resolver": {"server": "dns_direct"}
   },

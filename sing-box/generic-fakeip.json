@@ -21,9 +21,9 @@
     {"tag": "🚀 默认代理", "type": "selector", "outbounds": ["♻️ 自动选择", "🐸 手动选择"]},
     {"tag": "♻️ 自动选择", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100},
     {"tag": "🐸 手动选择", "type": "selector", "outbounds": []},
-    {"tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🎯 全球直连", "🚀 默认代理"]},
-    {"tag": "🎯 全球直连", "type": "direct"},
-    {"tag": "GLOBAL", "type": "selector", "outbounds": ["🎯 全球直连", "🚀 默认代理"]} 
+    {"tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🚀 默认代理", "🎯 全球直连"]},
+    {"tag": "GLOBAL", "type": "selector", "outbounds": ["🚀 默认代理", "🎯 全球直连"]},
+    {"tag": "🎯 全球直连", "type": "direct"}
   ],
   "route": {
     "rules": [
@@ -62,7 +62,7 @@
       {"tag": "geoip-telegram", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs", "download_detour": "🎯 全球直连"},
       {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://github.com/qljsyph/ruleset-icon/raw/refs/heads/main/sing-box/geoip/China-ASN-combined-ip.srs", "download_detour": "🎯 全球直连"}
     ],
-    "final": "🚀 默认代理",
+    "final": "🐠 漏网之鱼",
     "auto_detect_interface": true,
     "default_domain_resolver": {"server": "dns_direct"}
   },

@@ -77,6 +77,10 @@
       "route_exclude_address_set": [
         "geoip-cn"
       ],
+      "route_exclude_address": [
+        "100.64.0.0/10",
+        "fd7a:115c:a1e0::/48"
+      ],
       "mtu": 9000,
       "auto_route": true,
       "auto_redirect": true,
